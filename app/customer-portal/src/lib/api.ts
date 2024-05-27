@@ -20,5 +20,5 @@ export class ApiService {
 }
 
 
-const apiService = new ApiService(import.meta.env.VITE_API_URL);
+const apiService = new ApiService(import.meta.env.VITE_COMPANY_SEARCH_API);
 export default apiService;
