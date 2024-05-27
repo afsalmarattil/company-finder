@@ -11,8 +11,6 @@ export const paginationInfo: Writable<Pagination | null> = writable(null);
 export const searchQuery: Writable<string> = writable("");
 export const isSearching = derived(searchQuery, $searchQuery => $searchQuery.trim() !== "");
 
-
-
 export  const fetchCompanies= async(page: number = 1, page_size: number = 12, append: boolean = false): Promise<void> => {
     if (!browser || get(isSearching)) return;
 
@@ -86,3 +84,13 @@ export const fetchSimilarCompanies = async(companyId: string): Promise<void> =>{
         similarCompanies.set([]);
     }
 }
+
+export const uploadCSV= async(file: File) =>{
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    return apiService.fetchFromApi('/data/upload-csv/', {
+      method: 'POST',
+      body: formData
+    });
+  }

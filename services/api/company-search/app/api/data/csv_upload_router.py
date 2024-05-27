@@ -1,4 +1,5 @@
 import io
+import os
 
 import pandas as pd
 from elasticsearch import AsyncElasticsearch, helpers
@@ -6,7 +7,9 @@ from fastapi import APIRouter, File, HTTPException, UploadFile
 from fastapi.responses import JSONResponse
 
 router = APIRouter()
-es = AsyncElasticsearch(hosts=["http://localhost:9200"])
+
+es_host = os.getenv("ES_HOST", "http://localhost:9200")
+es = AsyncElasticsearch(hosts=[es_host])
 index_name = "companies"
 
 

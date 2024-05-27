@@ -2,6 +2,7 @@
   import "../app.css";
   import Footer from "$lib/components/footer/Footer.svelte";
   import NavBar from "$lib/components/navbar/NavBar.svelte";
+  import { Toaster } from "svelte-french-toast";
 </script>
 
 <main>
@@ -20,4 +21,5 @@
       <Footer />
     </div>
   </div>
+  <Toaster />
 </main>

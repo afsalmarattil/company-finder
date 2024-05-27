@@ -9,6 +9,7 @@
   } from "$lib/stores/companyStore";
   import CompanyCard from "$lib/components/cards/CompanyCard.svelte";
   import { Breadcrumb, BreadcrumbItem } from "flowbite-svelte";
+  import NoData from "$lib/components/error/NoData.svelte";
 
   let companyId: string;
   $: companyId = $page.params.id;
@@ -34,6 +35,10 @@
     <BreadcrumbItem>similar</BreadcrumbItem>
   </Breadcrumb>
 </div>
+
+{#if !$similarCompanies.length}
+  <NoData message="No similar company data found" />
+{/if}
 
 <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 p-4">
   {#each $similarCompanies as company (company.id)}

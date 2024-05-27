@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  company-search-api:
+    build:
+      context: ./services/api/company-search
+      dockerfile: Dockerfile
+    container_name: company-search-api
+    environment:
+      - PORT=8000
+      - ES_HOST=http://elasticsearch:9200
+      - K_SIMILAR=8
+    ports:
+      - "8000:8000"
+    depends_on:
+      - elasticsearch
+
+  customer-portal:
+    build:
+      context: ./app/customer-portal
+      dockerfile: Dockerfile
+      args:
+        - VITE_COMPANY_SEARCH_API=http://localhost:8000
+    container_name: customer-portal
+    environment:
+      - PORT=8080
+    ports:
+      - "8080:8080"
+    depends_on:
+      - company-search-api
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.15.2
+    container_name: elasticsearch
+    environment:
+      - discovery.type=single-node
+    ports:
+      - "9200:9200"
+    volumes:
+      - esdata:/usr/share/elasticsearch/data
+
+volumes:
+  esdata:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/esdata

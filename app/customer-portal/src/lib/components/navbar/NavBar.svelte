@@ -5,6 +5,7 @@
     NavHamburger,
     Navbar,
     Search,
+    ToolbarButton,
   } from "flowbite-svelte";
 
   import UserMenu from "../user/UserMenu.svelte";
@@ -13,6 +14,9 @@
     searchCompanies,
     searchQuery,
   } from "$lib/stores/companyStore";
+
+  import { CogOutline } from "flowbite-svelte-icons";
+  import { goto } from "$app/navigation";
 
   export let fluid = true;
   export let drawerHidden = false;
@@ -62,6 +66,14 @@
     <div
       class="ms-auto flex items-center text-gray-500 dark:text-gray-400 sm:order-2"
     >
+      <ToolbarButton
+        on:click={() => goto("/settings")}
+        size="lg"
+        class="-mx-0.5 hover:text-gray-900 dark:hover:text-white"
+      >
+        <CogOutline size="lg" />
+      </ToolbarButton>
+
       <DarkMode />
       <UserMenu />
     </div>
