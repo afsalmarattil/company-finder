@@ -1,10 +1,9 @@
 Company Finder
 Company Finder is a powerful tool designed to streamline the process of searching for companies and identifying similar entities in the industry. 
 
-Features
-Company Search: Allows users to search for companies by name, location, industry, and size.
-Similar Company Discovery: Recommends similar companies based on industry, services, size, and other relevant metrics.
-Detailed Profiles: Access detailed profiles including key data points such as financials, employee count, and market niche.
+Company Search: A search bar to find companies by name.
+Company Profile: A display area showing detailed information about a selected company, containing a button that finds similar companies.
+Similar Companies: A separate section to display a list of N companies that are similar to a chosen company.
 
 features:
 1) Settings page to upload company data. Data should be in cs format and should contain the below columns
@@ -15,7 +14,7 @@ features:
 5) Similar companies - keyword and industry-based search
 
 
-Technologies:
+Technology stack:
 1) API - http://localhost:8000/docs (fastapi)
 2) Data storage and indexing - Elastic search
 3) Front end - sveletekit
