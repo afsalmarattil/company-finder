@@ -1,10 +1,15 @@
+import os
 from typing import List, Optional
 
 from elasticsearch import AsyncElasticsearch
 from fastapi import APIRouter, HTTPException, Query
 from pydantic import BaseModel, HttpUrl
 
-es = AsyncElasticsearch(hosts=["http://localhost:9200"])
+es_host = os.getenv("ES_HOST", "http://localhost:9200")
+es = AsyncElasticsearch(hosts=[es_host])
+
+k = os.getenv("K_SIMILAR", 5)
+
 router = APIRouter()
 
 
@@ -75,12 +80,14 @@ async def similar_companies(company_id: str):
                     "should": [
                         {"match": {"industry": industry}},
                         {"match": {"keywords": keywords}},
-                    ]
+                    ],
+                    "must_not": [{"term": {"_id": company_id}}],
                 }
-            }
+            },
+            "size": k,
         }
 
-        response = await es.search(index="companies", body=query, size=3)
+        response = await es.search(index="companies", body=query)
         return [
             {**hit["_source"], "id": hit["_id"]} for hit in response["hits"]["hits"]
         ]
