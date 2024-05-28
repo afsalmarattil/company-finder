@@ -24,3 +24,8 @@ To Run:
 1) create a folder "esdata" at root
 2) docker-compose up
 3) go to http://localhost:8080/
+
+
+@todo
+1) Modify the existing API to support both keyword and semantic searches
+2) Add Question Answering for comapny data
