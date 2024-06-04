@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: company-search-api
+  namespace: companysearch
+spec:
+  selector:
+    app: company-search-api
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer-portal
+  namespace: companysearch
+spec:
+  selector:
+    app: customer-portal
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: elasticsearch
+  namespace: companysearch
+spec:
+  selector:
+    app: elasticsearch
+  ports:
+    - protocol: TCP
+      port: 9200
+      targetPort: 9200

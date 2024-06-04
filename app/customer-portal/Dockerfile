@@ -1,8 +1,9 @@
 # Build Stage
-FROM node:lts-slim as build
+FROM node:lts as build
 
 # Install pnpm globally
 RUN npm install -g pnpm
+
 
 WORKDIR /app
 
@@ -26,7 +27,7 @@ ENV VITE_COMPANY_SEARCH_API=$VITE_COMPANY_SEARCH_API
 RUN pnpm run build
 
 # Run Stage
-FROM node:lts-slim as run
+FROM node:lts as run
 
 # Install pnpm globally
 RUN npm install -g pnpm
@@ -47,4 +48,4 @@ RUN pnpm install --prod
 EXPOSE 8080
 
 # Set the default command to run the application
-CMD export PORT=${PORT} && pnpm start
+CMD ["sh", "-c", "export PORT=${PORT:-8080} && pnpm start"]

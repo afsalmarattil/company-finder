@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: company-search-api
+  namespace: companysearch
+  labels:
+    app: company-search-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: company-search-api
+  template:
+    metadata:
+      labels:
+        app: company-search-api
+    spec:
+      containers:
+      - name: company-search-api
+        image: company-search-api:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: PORT
+          value: "8000"
+        - name: ES_HOST
+          value: "http://elasticsearch:9200"
+        - name: K_SIMILAR
+          value: "8"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer-portal
+  namespace: companysearch
+  labels:
+    app: customer-portal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customer-portal
+  template:
+    metadata:
+      labels:
+        app: customer-portal
+    spec:
+      containers:
+      - name: customer-portal
+        image: customer-portal:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PORT
+          value: "8080"
