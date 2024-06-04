@@ -1,0 +1,36 @@
+apiVersion: skaffold/v2beta26
+kind: Config
+metadata:
+  name: companyfinder
+build:
+  local:
+    push: false  # This tells Skaffold not to push images to a remote registry
+  artifacts:
+  - image: company-search-api
+    context: ./services/api/company-search
+    docker:
+      dockerfile: Dockerfile
+  - image: customer-portal
+    context: ./app/customer-portal
+    docker:
+      dockerfile: Dockerfile
+deploy:
+  kustomize:
+    paths:
+    - k8s/overlays/dev
+profiles:
+  - name: dev
+    deploy:
+      kustomize:
+        paths:
+        - k8s/overlays/dev
+  - name: staging
+    deploy:
+      kustomize:
+        paths:
+        - k8s/overlays/staging
+  - name: prod
+    deploy:
+      kustomize:
+        paths:
+        - k8s/overlays/prod
